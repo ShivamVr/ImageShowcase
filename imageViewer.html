@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Showcase</title>
+    <style>
+        body{
+            font-family: monospace;
+            position: relative;
+        
+        }
+        
+        .title{
+            width: 50%;
+            margin: 20px auto;
+            font-size: 290%;
+            color: #2874F0;
+            cursor: pointer;
+        
+        }
+        
+        .home-page{
+            text-align: center;
+        }
+        
+        .container{
+            width: 90%;
+            display: grid;
+            grid-template-columns: repeat(2, 45%);
+            margin: 10px auto;
+            padding: 20px 0;
+            justify-content: center;
+        }
+
+        .container input{
+            width: 90%;
+            padding: 10px 20px;
+            margin: 10px 0;
+        }
+        .container>div{
+            color: rgb(70, 70, 70);
+            text-align: center;
+            font-size: 110%;
+        }
+        ::placeholder{
+            padding-left: 2%;
+        }
+        
+        .proceed{
+            width: 100px;
+            margin: 10px auto;
+            padding: 5px;
+        }
+        
+        
+        
+        /* -----------------------------IMAGE-PAGE------------------------------ */
+        .image-page{
+            margin-top: 20px;
+            border-top: 2px solid #ccc;
+            padding: 10px;
+            
+        }
+        
+        
+        .image-container{
+         display: grid;
+         grid-template-columns: repeat(2, 1fr);
+         grid-gap: 10px;
+         justify-content: center;
+         
+        }
+        .image-container img{
+            width: 100%;
+        }
+        
+        .btn-box{
+            text-align: center;
+            padding: 15px 0;
+        }
+        
+        .btn{
+            outline: none;
+            background-color: #fff;
+            color: #2874F0;
+            border-radius: 5px;
+            border: none;
+            padding: 10px 8px;
+            box-shadow: 0 0 2px;
+        }
+        .btn:hover{
+            cursor: pointer;
+            background-color: #3a80f1;
+            color: #fff;
+            
+        }
+        .btn:active{
+            background-color:  #1459c7 ;
+            transition: all 0.2s ease-in;
+        }
+        
+        .text-box{
+            outline: none;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            color: rgb(104, 104, 104);
+            box-shadow: 0 0 2px;
+        }
+        .text-box:hover{
+            box-shadow: 0 0 5px #7aadff;
+        }
+        .dark{
+            background-color: rgb(41, 39, 49);
+            color: white;
+        }
+
+ 
+        
+        @media only screen and (max-width: 600px) {
+  
+
+            .title{
+              width: 50%;
+              font-size: 210%;
+            }
+              .container{
+            width: 100%;
+            grid-template-columns: repeat(1, 80%);
+            margin: 10px auto;
+            padding: 0 0;
+            justify-content: center;
+        
+        }
+              .container input{
+            width: 92%;
+            padding: 9px 10px;
+            margin: 10px 0;
+        }
+        ::placeholder{
+            padding-left: 2%;
+        }
+        }
+
+    
+        
+</style>
+</head>
+<body class="Theme">
+
+        <div class="home-page">
+    <h1 onclick="theme()" class="title">Image Showcase</h1>
+    <div class="container">
+        <div class="input-box"><input placeholder="static url" class="text-box" id="firstUrl" type="text"> </div>
+        <div class="input-box"><input placeholder="remain url" class="text-box" id="secondUrl" type="text"> </div>
+        <div class="input-box"><input placeholder="start" class="text-box" id="startFrom" type="text">  </div>
+        <div class="input-box"><input placeholder="end" class="text-box" id="till"      type="text">  </div>
+        <div class="input-box"><input placeholder="col" class="text-box" id="noOfCol"   type="text">  </div>
+        <div class="input-box"><input placeholder="width" class="text-box" id="imageWidth"type="text">  </div>
+    </div> 
+    <button onclick="proceed()" class="proceed btn">Proceed</button>
+</div>
+
+<div class="image-page">
+   <div class="image-container"> </div>
+</div>
+
+<script>
+
+    function proceed(){
+        let firstUrl=document.getElementById('firstUrl').value
+        let secondUrl=document.getElementById('secondUrl').value
+        let startFrom=Number(document.getElementById('startFrom').value)
+        let till=Number(document.getElementById('till').value)
+        let noOfCol=document.getElementById('noOfCol').value
+        let imageWidth=document.getElementById('imageWidth').value
+        let imageContainer=document.querySelector('.image-container')
+    
+        imageContainer.innerHTML=null
+    
+        imageContainer.style.gridTemplateColumns= `repeat(${noOfCol}, ${imageWidth})`
+    
+        for(i=startFrom; i<=till; i++){
+            let box=document.createElement('img')
+            box.src = firstUrl+i+secondUrl
+            imageContainer.append(box)
+        }
+        
+    }
+    
+    var count=true
+     
+    function theme(){
+        let Theme = document.querySelector('.Theme')
+        
+        if(count){
+            Theme.classList.add('dark')
+            count = false
+
+        }else{
+            Theme.classList.remove('dark')
+            count = true
+            }
+    }
+     </script>
+</body>
+</html>
