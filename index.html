@@ -13,11 +13,13 @@
         }
         
         .title{
+            display: inline;
             width: 50%;
             margin: 20px auto;
             font-size: 290%;
             color: #2874F0;
             cursor: pointer;
+            user-select: none;
         
         }
         
@@ -31,12 +33,12 @@
             grid-template-columns: repeat(2, 45%);
             margin: 10px auto;
             padding: 20px 0;
-            justify-content: center;
+            justify-content: space-between;
         }
 
         .container input{
             width: 90%;
-            padding: 10px 20px;
+            padding: 13px 20px;
             margin: 10px 0;
         }
         .container>div{
@@ -123,8 +125,8 @@
   
 
             .title{
-              width: 50%;
-              font-size: 210%;
+              width: 80%;
+              font-size: 180%;
             }
               .container{
             width: 100%;
@@ -136,14 +138,48 @@
         }
               .container input{
             width: 92%;
-            padding: 9px 10px;
+            padding: 15px 10px;
             margin: 10px 0;
+        }
+        .container div.sizer-box input, .container div.loop-box input{
+            width: 80%;
+            padding:  13px 4.5%;
+            overflow: hidden;
+            box-sizing: unset;
         }
         ::placeholder{
             padding-left: 2%;
         }
+       
+        }
+        
+        .loop-box{
+            width: 98%;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(3, 30%);
+            justify-content: space-between;
+        }
+        
+        .sizer-box{
+            width: 98%;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            justify-content: space-between;
+            
         }
 
+
+        .sizer-box input,.loop-box input{
+           width: 54%;
+        }
+     
+     .btn-page{
+         display: inline-block;
+         width: 8%;
+         margin: auto 10%;
+     }
     
         
 </style>
@@ -151,14 +187,21 @@
 <body class="Theme">
 
         <div class="home-page">
-    <h1 onclick="theme()" class="title">Image Showcase</h1>
+            <button onclick="previousPage()" class="btn btn-page">-</button>
+            <h1 onclick="theme()" class="title"> Image Showcase</h1>
+            <button onclick="nextPage()" class="btn btn-page">+</button>
     <div class="container">
         <div class="input-box"><input placeholder="static url" class="text-box" id="firstUrl" type="text"> </div>
         <div class="input-box"><input placeholder="remain url" class="text-box" id="secondUrl" type="text"> </div>
-        <div class="input-box"><input placeholder="start" class="text-box" id="startFrom" type="text">  </div>
-        <div class="input-box"><input placeholder="end" class="text-box" id="till"      type="text">  </div>
-        <div class="input-box"><input placeholder="col" class="text-box" id="noOfCol"   type="text">  </div>
-        <div class="input-box"><input placeholder="width" class="text-box" id="imageWidth"type="text">  </div>
+        <div class="loop-box">
+             <div class="input-box"><input placeholder="start" class="text-box" id="startFrom" type="text">  </div>
+             <div class="input-box"><input placeholder="end" class="text-box" id="till"      type="text">  </div>
+             <div class="input-box"><input placeholder="page" class="text-box" id="page"      type="text">  </div>
+        </div>
+        <div class="sizer-box">
+            <div class="input-box"><input placeholder="col" class="text-box" id="noOfCol"   type="text">  </div>
+            <div class="input-box"><input placeholder="width" class="text-box" id="imageWidth"type="text">  </div>
+        </div>
     </div> 
     <button onclick="proceed()" class="proceed btn">Proceed</button>
 </div>
@@ -177,15 +220,18 @@
         let noOfCol=document.getElementById('noOfCol').value
         let imageWidth=document.getElementById('imageWidth').value
         let imageContainer=document.querySelector('.image-container')
-    
+        let page=document.getElementById('page').value
+
         imageContainer.innerHTML=null
     
         imageContainer.style.gridTemplateColumns= `repeat(${noOfCol}, ${imageWidth})`
     
         for(i=startFrom; i<=till; i++){
-            let box=document.createElement('img')
-            box.src = firstUrl+i+secondUrl
-            imageContainer.append(box)
+            let image=document.createElement('img')
+            let patch = firstUrl.replace('*', page)
+            image.src = patch+i+secondUrl
+            console.log('image.src:', image.src)
+            imageContainer.append(image)
         }
         
     }
@@ -204,6 +250,28 @@
             count = true
             }
     }
-     </script>
+
+    function nextPage(){
+
+    let page = Number(document.getElementById('page').value)
+    
+    page++
+    
+    document.getElementById('page').value=page
+    
+    console.log('page:', page)
+
+    
+   }
+
+   function previousPage(){
+   let page = Number(document.getElementById('page').value)
+   if(page!==0){
+   page--
+    document.getElementById('page').value=page
+    console.log('page:', page)
+   }
+   }
+</script>
 </body>
 </html>
