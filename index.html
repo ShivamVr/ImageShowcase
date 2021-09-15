@@ -288,7 +288,12 @@ function previousPage(){
         document.getElementById('page').value=page
         proceed()
    }
-   }
+   } 
+
+// Json button stop propagation
+ const jsonBtn = document.querySelector('.json-btn')
+ jsonBtn.addEventListener('click',(e)=> e.stopPropagation())
+
 </script>
 </body>
 </html>
