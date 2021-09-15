@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1 {
+        font-size: 160%;
+        font-family: sans-serif;
+        font-weight: 300;
+        color: cornflowerblue;
+      }
+      textarea {
+        box-shadow: 0 4px 8px rgb(214, 214, 214), -2px 0px 4px rgb(216, 216, 216);
+        color: slategray;
+        font-family: sans-serif;
+        border: 1px solid #ccc;
+        outline: none;
+        padding: 1rem;
+        border-radius: .5rem;
+      }
+      button {
+        border: 1px solid skyblue;
+        border-radius: .3rem;
+        margin: 1rem 0;
+        background: #fff;
+        box-shadow: 0 2px 5px #ccc;
+        outline: none;
+        padding: 0.5rem 1rem;
+        color: cornflowerblue;
+        cursor: pointer;
+      }
+      #btn:active {
+        background-color: steelblue;
+        color: rgb(240, 240, 240);
+      }
+      #image-box {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        justify-content: center;
+        grid-gap: 10px;
+        flex-direction: column;
+        flex-wrap: wrap;
+      }
+      #image-box img {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>JSON to images</h1>
+      <textarea
+        class="text-area"
+        onfocusout="onFocusOutHandler()"
+        onfocus="onFocusHandler()"
+        onchange="onChangeHandler()"
+        id="text"
+        cols="70"
+        rows="1"
+      ></textarea>
+      <button onclick="getData()" id="btn">submit</button>
+      <div id="image-box"></div>
+    </div>
+    <script>
+      const text = document.getElementById('text')
+      const imageBox = document.getElementById('image-box')
+      const onChangeHandler = () => {
+        return text.value
+      }
+      const getData = () => {
+        const value = onChangeHandler()
+        const data = JSON.parse(value)
+        data.map((obj) => {
+          const image = document.createElement('IMG')
+          image.src = obj.image
+          imageBox.appendChild(image)
+        })
+      }
+
+      const onFocusHandler = () => {
+        const textArea = document.querySelector('.text-area')
+        textArea.setAttribute('rows', '20')
+      }
+
+      const onFocusOutHandler = () => {
+        const textArea = document.querySelector('.text-area')
+        textArea.setAttribute('rows', '1')
+      }
+      
+    </script>
+  </body>
+</html>

@@ -9,14 +9,21 @@
         body{
             font-family: monospace;
             position: relative;
-        
+        }
+        .json-btn{
+            text-decoration: none;
+            color: #3A80F1;
+            font-size: 50%;
+        }
+        .json-btn:hover{
+            color: #fff;
         }
         
         .title{
             display: inline;
             width: 50%;
             margin: 20px auto;
-            font-size: 290%;
+            font-size: 240%;
             color: #2874F0;
             cursor: pointer;
             user-select: none;
@@ -119,6 +126,9 @@
             color: white;
         }
 
+        .url-box{
+         width: 217%;
+         }
  
         
         @media only screen and (max-width: 600px) {
@@ -150,6 +160,9 @@
         ::placeholder{
             padding-left: 2%;
         }
+        .url-box{
+         width: 100%;
+         }
        
         }
         
@@ -178,8 +191,13 @@
      .btn-page{
          display: inline-block;
          width: 8%;
-         margin: auto 10%;
+         margin: auto 5%;
      }
+     .empty-div{
+         width: 0;
+         height: 0;
+     }
+     
     
         
 </style>
@@ -187,12 +205,10 @@
 <body class="Theme">
 
         <div class="home-page">
-            <button onclick="previousPage()" class="btn btn-page">-</button>
-            <h1 onclick="theme()" class="title"> Image Showcase</h1>
-            <button onclick="nextPage()" class="btn btn-page">+</button>
+            <h1 onclick="theme()" class="title"> Image Showcase <a class="btn json-btn" href="/jsoncom.html">Json</a> </h1>
     <div class="container">
-        <div class="input-box"><input placeholder="static url" class="text-box" id="firstUrl" type="text"> </div>
-        <div class="input-box"><input placeholder="remain url" class="text-box" id="secondUrl" type="text"> </div>
+        <div class="input-box url-box"><input placeholder="static url" class="text-box" id="firstUrl" type="text"> </div>
+        <div class="empty-div"></div>
         <div class="loop-box">
              <div class="input-box"><input placeholder="start" class="text-box" id="startFrom" type="text">  </div>
              <div class="input-box"><input placeholder="end" class="text-box" id="till"      type="text">  </div>
@@ -203,7 +219,10 @@
             <div class="input-box"><input placeholder="width" class="text-box" id="imageWidth"type="text">  </div>
         </div>
     </div> 
+    <button onclick="previousPage()" class="btn btn-page">-</button>
     <button onclick="proceed()" class="proceed btn">Proceed</button>
+    <button onclick="nextPage()" class="btn btn-page">+</button>
+
 </div>
 
 <div class="image-page">
@@ -214,7 +233,6 @@
 
     function proceed(){
         let firstUrl=document.getElementById('firstUrl').value
-        let secondUrl=document.getElementById('secondUrl').value
         let startFrom=Number(document.getElementById('startFrom').value)
         let till=Number(document.getElementById('till').value)
         let noOfCol=document.getElementById('noOfCol').value
@@ -229,8 +247,8 @@
         for(i=startFrom; i<=till; i++){
             let image=document.createElement('img')
             let patch = firstUrl.replace('*', page)
-            image.src = patch+i+secondUrl
-            console.log('image.src:', image.src)
+            patch = patch.replace('$', i)
+            image.src = patch
             imageContainer.append(image)
         }
         
@@ -258,20 +276,23 @@
     page++
     
     document.getElementById('page').value=page
-    
-    console.log('page:', page)
 
+    proceed()
     
+}
+
+function previousPage(){
+    let page = Number(document.getElementById('page').value)
+    if(page!==0){
+        page--
+        document.getElementById('page').value=page
+        proceed()
+   }
    }
 
-   function previousPage(){
-   let page = Number(document.getElementById('page').value)
-   if(page!==0){
-   page--
-    document.getElementById('page').value=page
-    console.log('page:', page)
-   }
-   }
+   // JSON BUTTON
+//    const jsonBtn = document.querySelector('.json-btn')
+//    jsonBtn.addEventListener('click', (e)=> e.stopPropagation() )
 </script>
 </body>
 </html>
